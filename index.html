@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta 
+    name="viewport" 
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" 
+  />
+
+  <meta name="theme-color" content="#000000" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <title>EntregaOK — Controle Premium de Entregas</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- FUNDO PREMIUM -->
+  <div class="app-bg">
+    <div class="bg-vignette"></div>
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+    <div class="orb orb-three"></div>
+    <div class="orb orb-four"></div>
+    <div class="liquid-line line-one"></div>
+    <div class="liquid-line line-two"></div>
+    <div class="noise"></div>
+    <div class="grid-light"></div>
+  </div>
+
+  <!-- ONBOARDING / NOME DO ENTREGADOR -->
+  <section class="welcome-screen" id="welcomeScreen">
+    <div class="welcome-card glass-premium">
+      <div class="welcome-logo">
+        <span>OK</span>
+      </div>
+
+      <p class="eyebrow">primeiro acesso</p>
+      <h1>Quem está entregando hoje?</h1>
+
+      <p class="welcome-text">
+        Coloque o nome do entregador para personalizar o fechamento do dia e deixar o controle mais profissional.
+      </p>
+
+      <form id="welcomeForm">
+        <div class="field-group">
+          <label for="driverNameInput">Nome do entregador</label>
+          <input 
+            type="text" 
+            id="driverNameInput" 
+            placeholder="Ex: Murilo Dias"
+            autocomplete="off"
+            required
+          />
+        </div>
+
+        <button class="submit-btn full" type="submit">
+          Entrar no EntregaOK
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- APP -->
+  <main class="app-shell" id="appShell">
+
+    <!-- HEADER -->
+    <header class="topbar glass-premium">
+      <div class="brand">
+        <div class="brand-icon">
+          <span>OK</span>
+        </div>
+
+        <div class="brand-copy">
+          <p class="eyebrow">offline ready</p>
+          <h1>EntregaOK</h1>
+          <span id="driverGreeting">Bom trabalho</span>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="icon-btn" id="btnEditDriver" aria-label="Editar entregador">
+          ✎
+        </button>
+
+        <button class="icon-btn" id="btnTheme" aria-label="Tema">
+          ●
+        </button>
+      </div>
+    </header>
+
+    <!-- PAINEL ESQUERDO / CONTROLES -->
+    <aside class="control-column">
+
+      <!-- RESUMO -->
+      <section class="summary-grid">
+
+        <article class="summary-card primary glass-premium">
+          <div>
+            <p class="summary-label">Total entregue</p>
+            <h2 id="totalEntregue">R$ 0,00</h2>
+          </div>
+
+          <span id="qtdEntregue">0 finalizadas</span>
+        </article>
+
+        <article class="summary-card glass-premium">
+          <div>
+            <p class="summary-label">Na rua</p>
+            <h2 id="totalPendente">R$ 0,00</h2>
+          </div>
+
+          <span id="qtdPendente">0 pendentes</span>
+        </article>
+
+      </section>
+
+      <!-- AÇÕES RÁPIDAS -->
+      <section class="quick-actions glass-premium">
+
+        <button class="action-btn" id="btnNovaEntrega">
+          <span class="action-icon">+</span>
+          Nova entrega
+        </button>
+
+        <button class="action-btn ghost" id="btnFecharDia">
+          <span>✓</span>
+          Fechar dia
+        </button>
+
+        <button class="action-btn ghost danger" id="btnLimparDia">
+          <span>×</span>
+          Limpar
+        </button>
+
+      </section>
+
+      <!-- FORMULÁRIO -->
+      <section class="form-panel glass-premium" id="formPanel">
+
+        <div class="form-header">
+          <div>
+            <p class="eyebrow">registro rápido</p>
+            <h3>Adicionar entrega</h3>
+          </div>
+
+          <button class="icon-btn small" id="btnFecharForm" type="button">
+            ×
+          </button>
+        </div>
+
+        <form id="deliveryForm">
+
+          <div class="field-group">
+            <label for="nome">Nome / cliente</label>
+            <input 
+              type="text" 
+              id="nome" 
+              autocomplete="off"
+              placeholder="Ex: Cliente, mesa, bairro..."
+              required
+            />
+          </div>
+
+          <div class="field-group">
+            <label for="valor">Valor cobrado</label>
+            <input 
+              type="text" 
+              id="valor" 
+              inputmode="decimal"
+              placeholder="Ex: 45,00"
+              required
+            />
+          </div>
+
+          <button class="submit-btn" type="submit">
+            Salvar entrega
+          </button>
+
+        </form>
+
+      </section>
+
+      <!-- BUSCA -->
+      <section class="search-panel glass-premium">
+        <span class="search-icon">⌕</span>
+
+        <input 
+          type="text" 
+          id="busca" 
+          placeholder="Buscar entrega..."
+          autocomplete="off"
+        />
+      </section>
+
+    </aside>
+
+    <!-- PAINEL DIREITO / LISTA -->
+    <section class="deliveries-column glass-premium">
+
+      <div class="list-top">
+        <div>
+          <p class="eyebrow">controle do dia</p>
+          <h2>Entregas de hoje</h2>
+        </div>
+
+        <span id="contadorEntregas">0 entregas</span>
+      </div>
+
+      <section class="deliveries-list" id="listaEntregas">
+
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon">↗</div>
+          <h2>Nenhuma entrega ainda</h2>
+          <p>
+            Registre nome e valor em segundos. Foto é opcional e tudo fica salvo no navegador.
+          </p>
+
+          <button class="submit-btn compact" id="btnEmptyNova" type="button">
+            Criar primeira entrega
+          </button>
+        </div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+  <!-- BOTÃO FLUTUANTE MOBILE -->
+  <button class="floating-add" id="floatingAdd">
+    <span>+</span>
+    Nova entrega
+  </button>
+
+  <!-- MENU INFERIOR MOBILE -->
+  <nav class="bottom-nav glass-premium">
+    <button class="bottom-btn active" id="navHoje">
+      <span>⌂</span>
+      Hoje
+    </button>
+
+    <button class="bottom-btn" id="navNova">
+      <span>+</span>
+      Nova
+    </button>
+
+    <button class="bottom-btn" id="navFechar">
+      <span>✓</span>
+      Fechar
+    </button>
+  </nav>
+
+  <!-- MODAL FOTO -->
+  <div class="modal" id="photoModal">
+    <div class="modal-card glass-premium">
+
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">prova opcional</p>
+          <h3>Foto do pedido</h3>
+        </div>
+
+        <button class="icon-btn small" id="btnClosePhoto" type="button">
+          ×
+        </button>
+      </div>
+
+      <p class="modal-text">
+        Tire foto da comanda ou papel do pedido quando der tempo. Não é obrigatório.
+      </p>
+
+      <input 
+        type="file" 
+        id="photoInput" 
+        accept="image/*" 
+        capture="environment"
+        hidden
+      />
+
+      <button class="submit-btn full" id="btnTakePhoto" type="button">
+        Tirar foto
+      </button>
+
+      <button class="action-btn ghost full" id="btnRemovePhoto" type="button">
+        Remover foto
+      </button>
+
+    </div>
+  </div>
+
+  <!-- TELA PREMIUM DE FECHAMENTO -->
+  <section class="close-screen" id="closeScreen">
+
+    <div class="close-bg">
+      <div class="success-ring ring-one"></div>
+      <div class="success-ring ring-two"></div>
+      <div class="success-ring ring-three"></div>
+    </div>
+
+    <div class="close-card glass-premium">
+
+      <button class="icon-btn close-back" id="btnCloseSummary" type="button">
+        ×
+      </button>
+
+      <div class="success-badge">
+        <span>✓</span>
+      </div>
+
+      <p class="eyebrow">fechamento concluído</p>
+
+      <h1 id="closeTitle">
+        Dia finalizado com sucesso.
+      </h1>
+
+      <p class="close-subtitle" id="closeSubtitle">
+        Aqui está o resumo completo das entregas de hoje.
+      </p>
+
+      <div class="close-stats">
+
+        <article class="close-stat main">
+          <p>Total entregue</p>
+          <strong id="closeTotalEntregue">R$ 0,00</strong>
+        </article>
+
+        <article class="close-stat">
+          <p>Entregas</p>
+          <strong id="closeQtdTotal">0</strong>
+        </article>
+
+        <article class="close-stat">
+          <p>Finalizadas</p>
+          <strong id="closeQtdFinalizadas">0</strong>
+        </article>
+
+        <article class="close-stat">
+          <p>Pendentes</p>
+          <strong id="closeQtdPendentes">0</strong>
+        </article>
+
+      </div>
+
+      <div class="close-details">
+        <div>
+          <span>Total geral</span>
+          <strong id="closeTotalGeral">R$ 0,00</strong>
+        </div>
+
+        <div>
+          <span>Valor pendente</span>
+          <strong id="closeTotalPendente">R$ 0,00</strong>
+        </div>
+
+        <div>
+          <span>Entregador</span>
+          <strong id="closeDriverName">-</strong>
+        </div>
+      </div>
+
+      <div class="close-actions">
+        <button class="submit-btn full" id="btnDownloadClose" type="button">
+          Baixar fechamento
+        </button>
+
+        <button class="action-btn ghost full" id="btnBackToApp" type="button">
+          Voltar ao app
+        </button>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    Entrega salva
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
