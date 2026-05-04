@@ -1,4 +1,3 @@
-a
 const STORAGE_KEY = "entregaok_entregas_premium_v1";
 const DRIVER_KEY = "entregaok_driver_name_v1";
 
