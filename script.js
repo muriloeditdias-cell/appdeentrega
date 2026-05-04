@@ -14,6 +14,7 @@ const appShell = $("appShell");
 
 const formPanel = $("formPanel");
 const deliveryForm = $("deliveryForm");
+const navRapido = $("navRapido");
 const nomeInput = $("nome");
 const valorInput = $("valor");
 const buscaInput = $("busca");
@@ -60,12 +61,12 @@ function registrarEventos() {
   $("btnFecharForm").addEventListener("click", fecharForm);
   $("btnEmptyNova").addEventListener("click", abrirForm);
 
-  $("navNova").addEventListener("click", abrirForm);
   $("navHoje").addEventListener("click", voltarParaHoje);
   $("navFechar").addEventListener("click", abrirFechamentoPremium);
 
   $("btnFecharDia").addEventListener("click", abrirFechamentoPremium);
   $("btnLimparDia").addEventListener("click", limparDia);
+  $("navRapido").addEventListener("click", alternarModoRapido);
 
   deliveryForm.addEventListener("submit", criarEntrega);
   buscaInput.addEventListener("input", renderizar);
@@ -89,6 +90,30 @@ function registrarEventos() {
   });
 
   document.addEventListener("keydown", atalhos);
+}
+
+function alternarModoRapido() {
+  const ativo = document.body.classList.contains("modo-rapido");
+
+  if (ativo) {
+    // DESATIVAR
+    document.body.classList.remove("modo-rapido");
+    navRapido.classList.remove("active-quick");
+
+    fecharForm();
+    mostrarToast("Modo normal");
+
+  } else {
+    // ATIVAR
+    document.body.classList.add("modo-rapido");
+    navRapido.classList.add("active-quick");
+
+    abrirForm();
+    nomeInput.focus();
+
+    mostrarToast("Modo rápido ativado ⚡");
+    vibrarLeve();
+  }
 }
 
 function verificarEntregador() {
@@ -209,6 +234,12 @@ function atualizarNavAtiva(id) {
 
   if (ativo) {
     ativo.classList.add("active");
+  }
+
+  const navRapido = $("navRapido");
+
+  if (navRapido && document.body.classList.contains("modo-rapido")) {
+    navRapido.classList.add("active-quick");
   }
 }
 
@@ -820,6 +851,32 @@ function escaparHTML(texto) {
   div.textContent = texto;
   return div.innerHTML;
 }
+
+function alternarModoRapido() {
+  const navRapido = $("navRapido");
+  const ativo = document.body.classList.contains("modo-rapido");
+
+  if (ativo) {
+    document.body.classList.remove("modo-rapido");
+    navRapido.classList.remove("active-quick");
+    fecharForm();
+    atualizarNavAtiva("navHoje");
+    mostrarToast("Modo normal");
+    return;
+  }
+
+  document.body.classList.add("modo-rapido");
+  navRapido.classList.add("active-quick");
+  formPanel.classList.add("active");
+
+  setTimeout(() => {
+    nomeInput.focus();
+  }, 120);
+
+  mostrarToast("Modo rápido ativado ⚡");
+  vibrarLeve();
+}
+
 
 window.alternarStatus = alternarStatus;
 window.apagarEntrega = apagarEntrega;
